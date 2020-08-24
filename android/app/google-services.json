@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "753950566335",
+    "firebase_url": "https://twitterreactnative.firebaseio.com",
+    "project_id": "twitterreactnative",
+    "storage_bucket": "twitterreactnative.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:753950566335:android:6d5389e4053cbb5602a30a",
+        "android_client_info": {
+          "package_name": "com.twitterreactnative"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "753950566335-9nv8snt6vs74umh0uggu2f0g7u68dnhj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0ESizG12nrO6QdqxlZ-mlJ4QY4iR0cVo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "753950566335-9nv8snt6vs74umh0uggu2f0g7u68dnhj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

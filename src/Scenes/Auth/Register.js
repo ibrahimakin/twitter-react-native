@@ -8,10 +8,10 @@ import { Icon } from 'native-base'
 
 const Register = (props) => {
 
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [name, setName] = useState('Deneme');
+    const [username, setUsername] = useState('deneme01');
+    const [email, setEmail] = useState('deneme01@test.com');
+    const [password, setPassword] = useState('1234567');
 
 
     const InvalidRegister = () => {
@@ -23,21 +23,21 @@ const Register = (props) => {
         //alert("You have entered an invalid email address!")
     }
     const RegisterClick = () => {
-        if (firstName == '' || lastName == '' || !ValidateEmail(email)) {
+        if (name == '' || username == '' || !ValidateEmail(email)) {
             InvalidRegister();
             return;
         }
         const params = {
             email,//"deneme@test.com",
             password,//"1234567"
-            firstName,
-            lastName
+            name,
+            username
         };
         props.register(params);
     }
 
     return (
-        <ScrollView style={{ flex: 1, backgroundColor: 'green' }}>
+        <ScrollView style={{ flex: 1, }}>
             <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', padding: 10, justifyContent: 'space-between' }}>
                 <Text onPress={() => props.navigation.pop()} style={{ color: colors.main, fontSize: 14 }}>Vazgeç</Text>
                 <Icon style={{ color: colors.main }} type="FontAwesome" name={'twitter'} fontSize={40} />
@@ -45,8 +45,8 @@ const Register = (props) => {
             </View>
             <View style={{ flex: 9, alignItems: 'center', justifyContent: 'space-around' }}>
 
-                <Input placeholder='Name' value={firstName} onChangeText={(value) => setFirstName(value)} style={{ marginBottom: 10, width: '85%', }} />
-                <Input placeholder='Username' value={lastName} onChangeText={(value) => setLastName(value)} style={{ marginBottom: 10, width: '85%', }} />
+                <Input placeholder='Name' value={name} onChangeText={(value) => setName(value)} style={{ marginBottom: 10, width: '85%', }} />
+                <Input placeholder='Username' value={username} onChangeText={(value) => setUsername(value)} style={{ marginBottom: 10, width: '85%', }} />
                 <Input placeholder='e-mail' value={email} onChangeText={(value) => setEmail(value)} style={{ marginBottom: 10, width: '85%', }} />
                 <Input placeholder='password' value={password} onChangeText={(value) => setPassword(value)} secureTextEntry style={{ marginBottom: 10, width: '85%', }} />
                 <Button text="Sign Up" loading={props.loading} style={{ marginBottom: 10, width: '85%', padding: 10, }} onPress={RegisterClick} />
@@ -60,7 +60,7 @@ const Register = (props) => {
                 <Text style={{ marginBottom: 30 }}>Terms and Privacy Policy.</Text>
 
             </View>
-            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end', backgroundColor: 'red' }}>
+            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end', }}>
                 <View style={[styles.line, { width: '100%' }]} />
                 <Text style={styles.mainText}>
                     Have an account?

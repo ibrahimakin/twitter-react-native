@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {
-    Text, View, ScrollView,
+    Alert, Text, View, ScrollView,
     SafeAreaView, Animated, Keyboard
 } from 'react-native';
 import { Icon } from 'native-base'
