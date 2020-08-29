@@ -11,12 +11,12 @@ const Button = (props) => (
       //marginTop: '4%',
       alignItems: 'center',
       justifyContent: 'center',
-      borderRadius: 5
+      borderRadius: 20
     }, props.style]}>
     {props.loading ?
       <ActivityIndicator size='small' color='white' /> :
       <Text style={{
-        color: 'black',
+        color: 'white',
         fontWeight: 'bold',
         fontSize: 18
       }}>{props.text}</Text>}

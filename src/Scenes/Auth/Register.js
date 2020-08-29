@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Alert, Text, View, ScrollView, Image, TouchableOpacity } from 'react-native';
+import { Alert, Text, View, ScrollView, Image, TouchableOpacity, SafeAreaView } from 'react-native';
 import { Button, Input } from '../../Components/';
 import { register } from "../../Actions"
 import { connect } from 'react-redux';
@@ -37,39 +37,32 @@ const Register = (props) => {
     }
 
     return (
-        <ScrollView style={{ flex: 1, }}>
-            <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', padding: 10, justifyContent: 'space-between' }}>
+        <SafeAreaView style={{ flex: 1 }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', padding: 10, justifyContent: 'space-between' }}>
                 <Text onPress={() => props.navigation.pop()} style={{ color: colors.main, fontSize: 14 }}>Vazgeç</Text>
                 <Icon style={{ color: colors.main }} type="FontAwesome" name={'twitter'} fontSize={40} />
                 <Icon style={{ color: colors.main }} type="FontAwesome" name={'ellipsis-h'} fontSize={25} />
             </View>
-            <View style={{ flex: 9, alignItems: 'center', justifyContent: 'space-around' }}>
+            <ScrollView style={{ flex: 0.8, }}>
 
-                <Input placeholder='Name' value={name} onChangeText={(value) => setName(value)} style={{ marginBottom: 10, width: '85%', }} />
-                <Input placeholder='Username' value={username} onChangeText={(value) => setUsername(value)} style={{ marginBottom: 10, width: '85%', }} />
-                <Input placeholder='e-mail' value={email} onChangeText={(value) => setEmail(value)} style={{ marginBottom: 10, width: '85%', }} />
-                <Input placeholder='password' value={password} onChangeText={(value) => setPassword(value)} secureTextEntry style={{ marginBottom: 10, width: '85%', }} />
-                <Button text="Sign Up" loading={props.loading} style={{ marginBottom: 10, width: '85%', padding: 10, }} onPress={RegisterClick} />
+                <View style={{ alignItems: 'center', }}>
+                    <Text style={{ width: '85%', marginBottom: 20, marginTop: 20, fontSize: 28, fontWeight: 'bold' }}>Twitter'a kayıt ol</Text>
+                    <Input placeholder='Name' value={name} onChangeText={(value) => setName(value)} style={{ marginBottom: 10, width: '85%', }} />
+                    <Input placeholder='Username' value={username} onChangeText={(value) => setUsername(value)} style={{ marginBottom: 10, width: '85%', }} />
+                    <Input placeholder='e-mail' value={email} onChangeText={(value) => setEmail(value)} style={{ marginBottom: 10, width: '85%', }} />
+                    <Input placeholder='password' value={password} onChangeText={(value) => setPassword(value)} secureTextEntry style={{ marginBottom: 10, width: '85%', }} />
+                </View>
+            </ScrollView>
 
 
 
+            <View style={{ flex: 0.1, alignItems: 'center', justifyContent: 'space-between', padding: 10, flexDirection: 'row', borderTopWidth: 1, borderTopColor: 'gray' }}>
+                <TouchableOpacity onPress={() => props.navigation.navigate('Login')}>
+                    <Text style={styles.blueText}>  Forgot Password?</Text>
+                </TouchableOpacity>
+                <Button text='Sign Up' style={{ padding: 10 }} onPress={RegisterClick} loading={props.loading} />
             </View>
-
-            <View style={{ flex: 1, alignItems: 'center' }}>
-                <Text>By signing up, you agree to our</Text>
-                <Text style={{ marginBottom: 30 }}>Terms and Privacy Policy.</Text>
-
-            </View>
-            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end', }}>
-                <View style={[styles.line, { width: '100%' }]} />
-                <Text style={styles.mainText}>
-                    Have an account?
-                    <TouchableOpacity onPress={() => props.navigation.navigate('Login')}>
-                        <Text style={styles.blueText}>  Log in</Text>
-                    </TouchableOpacity>
-                </Text>
-            </View>
-        </ScrollView>
+        </SafeAreaView>
     );
 }
 
