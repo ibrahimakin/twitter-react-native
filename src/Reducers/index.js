@@ -4,5 +4,5 @@ import ListReducers from './ListReducers';
 
 export default combineReducers({
     authResponse: AuthReducers,
-    charactersReducers: ListReducers,
+    charactersResponse: ListReducers,
 });

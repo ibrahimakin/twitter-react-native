@@ -7,7 +7,7 @@ const { width, height } = Dimensions.get('window')
 
 const Home = (props) => {
 
-    useEffect(() => {
+    /*useEffect(() => {
         props.getList();
     }, []);
 
@@ -26,7 +26,7 @@ const Home = (props) => {
             { cancelable: false }
         );
     }
-
+*/
     const renderItem = ({ item }) => (
         <View style={{ margin: 10, alignItems: 'center', justifyContent: 'space-between' }}>
             {item.image ?
@@ -57,7 +57,9 @@ const Home = (props) => {
     );
     return (
         <View style={{ flex: 1 }}>
-            {props.loadingCharacter ? <ActivityIndicator color='black' size='large' /> :
+            <Text onPress={() => props.navigation.navigate('HomeDetail')}>Home Page</Text>
+
+            {/* {props.loadingCharacter ? <ActivityIndicator color='black' size='large' /> :
                 <FlatList
                     style={{ flex: 1 }}
                     data={props.characters}
@@ -71,18 +73,18 @@ const Home = (props) => {
                                 height: 300,
                                 justifyContent: 'center'
                             }}>
-                                <Text style={{ marginBottom: 30 }}>No record</Text>
+                                <Text onPress={() => props.navigation.navigate('HomeDetail')} style={{ marginBottom: 30 }}>No record</Text>
                             </View>
                         )
                     }}
                 />
-            }
+            } */}
         </View>
     );
 }
 
-const mapStateToProps = ({ charactersReducers }) => {
-    const { loadingCharacter, characters } = charactersReducers;
+const mapStateToProps = ({ charactersResponse }) => {
+    const { loadingCharacter, characters } = charactersResponse;
     return { loadingCharacter, characters };
 }
 export default connect(mapStateToProps, { getList, removeData })(Home);

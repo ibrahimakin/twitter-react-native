@@ -1,4 +1,4 @@
-import { LOGIN_START, LOGIN_SUCCESS, LOGIN_FAILED, REGISTER_START, REGISTER_SUCCESS, REGISTER_FAILED } from '../Actions/types';
+import { LOGIN_START, LOGIN_SUCCESS, LOGIN_FAILED, REGISTER_START, REGISTER_SUCCESS, REGISTER_FAILED, SIGNOUT_SUCCESS } from '../Actions/types';
 import AsyncStorage from '@react-native-community/async-storage';
 
 const INITIAL_STATE = {
@@ -26,6 +26,11 @@ export default (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 loading: false,
+            };
+        case SIGNOUT_SUCCESS:
+            return {
+                ...state,
+                user: null,
             };
         default:
             return state;

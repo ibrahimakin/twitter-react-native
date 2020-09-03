@@ -1,19 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, SafeAreaView } from 'react-native';
+import { View, Text, SafeAreaView, ActivityIndicator } from 'react-native';
 import { Input, Button } from '../../Components'
 import { Icon } from 'native-base'
 
 import { connect } from 'react-redux';
-import { login } from '../../Actions'
+import { login, isUser } from '../../Actions'
 import * as RootNavigation from '../../RootNavigation';
 import { colors } from '../../style';
 
-
-
 const FirstScreen = (props) => {
     useEffect(() => {
+        props.isUser();
+    }, []);
 
-    }, [])
+    if (props.loading) {
+        return (
+            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                <ActivityIndicator color='black' size='large' />
+            </View>
+        );
+    }
 
     return (
         <SafeAreaView style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '' }}>
@@ -56,4 +62,4 @@ const mapStateToProps = ({ authResponse }) => {
     return { loading, user };
 };
 
-export default connect(mapStateToProps, { login })(FirstScreen);
+export default connect(mapStateToProps, { login, isUser })(FirstScreen);

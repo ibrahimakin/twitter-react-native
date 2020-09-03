@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import {
     Alert, Text, View, ScrollView,
     SafeAreaView, Animated, Keyboard
 } from 'react-native';
+// import { AuthContext } from '../../context';
 import { Icon } from 'native-base'
 import { Input, Button } from '../../Components'
 import { connect } from 'react-redux';
@@ -22,6 +23,8 @@ const Login = (props) => {
     const [password, setPassword] = useState('1234567');
     const [loading, setLoading] = useState(true);
     const [isShowPassword, setIsShowPassword] = useState(true);
+
+    //const { signIn } = useContext(AuthContext);
 
     const InvalidLogin = () => {
         Alert.alert("Alert", "Invalid e-mail or password!");
@@ -144,12 +147,13 @@ const Login = (props) => {
 
                 <Button
                     text={'Giriş yap'}
+                    loading={props.loading}
                     onPress={() => {
-                        const params = {
-                            email: email.toLowerCase(),
-                            password
-                        }
-                        props.login(params)
+                        //signIn();
+
+                        //const params = { email: email.toLowerCase(), password }
+                        //props.login(params)
+                        LoginClick();
                     }}
                     style={{ width: '25%', height: 30 }}
                 />
