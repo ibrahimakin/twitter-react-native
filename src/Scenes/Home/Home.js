@@ -2,6 +2,9 @@ import React, { useEffect } from 'react';
 import { Image, Text, View, FlatList, ActivityIndicator, Dimensions, TouchableOpacity, Alert } from 'react-native';
 import { getList, removeData } from "../../Actions"
 import { connect } from 'react-redux';
+import { Container, Header, Button, Icon, Fab } from 'native-base';
+import { colors } from '../../style';
+
 const { width, height } = Dimensions.get('window')
 
 
@@ -79,12 +82,19 @@ const Home = (props) => {
                     }}
                 />
             } */}
+            <Fab
+                containerStyle={{}}
+                style={{ backgroundColor: colors.main }}
+                position="bottomRight"
+                onPress={() => { props.navigation.navigate('AddTweet') }}>
+                <Icon name="pencil" type='FontAwesome' />
+            </Fab>
         </View>
     );
 }
 
-const mapStateToProps = ({ charactersResponse }) => {
-    const { loadingCharacter, characters } = charactersResponse;
-    return { loadingCharacter, characters };
+const mapStateToProps = ({ tweetResponse }) => {
+    const { loading, tweets } = tweetResponse;
+    return { loading, tweets };
 }
 export default connect(mapStateToProps, { getList, removeData })(Home);

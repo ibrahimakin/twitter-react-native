@@ -68,7 +68,7 @@ const Register = (props) => {
 
 const styles = {
     mainText: { color: 'gray' },
-    blueText: { color: '#4495cb', fontWeight: 'bold' },
+    blueText: { color: colors.main, fontWeight: 'bold' },
     logo: { width: 200, height: 100, marginBottom: 10, },
     facebook: { width: 20, height: 20 },
     line: { width: '35%', height: 0.5, backgroundColor: 'gray' }

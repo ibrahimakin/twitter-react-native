@@ -11,6 +11,7 @@ const Input = (props) => (
         secureTextEntry={props.secureTextEntry}
         keyboardType={props.keyboardType}
         value={props.value}
+        autoFocus={props.autoFocus}
         defaultValue={props.defaultValue}
         onChangeText={(value) => props.onChangeText(value)}
         style={[{

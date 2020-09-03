@@ -6,6 +6,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { connect } from 'react-redux';
 import auth from '@react-native-firebase/auth';
 
+import Menu from './Scenes/Menu/Menu'
 import Login from './Scenes/Auth/Login'
 import Register from './Scenes/Auth/Register'
 import FirstScreen from './Scenes/Auth/FirstScreen';
@@ -18,6 +19,8 @@ import Notifications from './Scenes/Notifications/Notifications';
 import NotificationDetail from './Scenes/Notifications/NotificationDetail';
 import Search from './Scenes/Search/Search';
 import SearchDetail from './Scenes/Search/SearchDetail';
+import AddTweet from './Scenes/Tweets/AddTweet';
+
 import { navigationRef } from './RootNavigation';
 import { LOCAL_AUTH_ID, USER } from './Actions/types';
 
@@ -25,8 +28,78 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import { colors } from './style'
 
 const AuthStack = createStackNavigator();
+const AuthStackScreen = () => {
+    return (
+        < AuthStack.Navigator initialRouteName='FirstScreen'>
+
+            <AuthStack.Screen
+                name="FirstScreen"
+                component={FirstScreen}
+                options={({ navigation, route }) => ({
+                    title: 'Login',
+                    headerShown: false
+                })}
+
+            />
+
+            <AuthStack.Screen
+                name="Login"
+                component={Login}
+                options={({ navigation, route }) => ({
+                    title: 'Login',
+                    headerShown: false
+                })}
+            />
+
+
+            <AuthStack.Screen
+                name="Register"
+                component={Register}
+                options={{
+                    title: 'Register',
+                    headerShown: false
+                }}
+            />
+            <AuthStack.Screen
+                name="Home"
+                component={Home}
+                options={({ navigation }) => ({
+                    title: 'Home',
+                    headerLeft: () => (
+                        <TouchableOpacity
+                            onPress={() => {
+                                AsyncStorage.removeItem(LOCAL_AUTH_ID);
+                                USER.token = null;
+                                navigation.replace('Login');
+                            }}
+                            style={{ marginLeft: 10 }}>
+                            <Image style={{ height: 20, width: 20 }} source={require('./Image/logout.png')} />
+                        </TouchableOpacity>
+                    ),
+                    headerRight: () => (
+                        <TouchableOpacity
+                            onPress={() => {
+                                navigation.navigate('AddItem');
+                            }}
+                            style={{ marginRight: 10 }}>
+                            <Text style={{ fontSize: 30 }}>+</Text>
+                        </TouchableOpacity>
+                    ),
+                })}
+            />
+            <AuthStack.Screen
+                name="AddItem"
+                component={AddItem}
+                options={{ title: 'Add New Character' }}
+            />
+
+
+        </AuthStack.Navigator>
+    );
+};
 
 const menu = (navigation) => {
     return (
@@ -89,7 +162,32 @@ const SearchStackScreen = () => {
 const TabStack = createBottomTabNavigator();
 const TabStackScreen = () => {
     return (
-        <TabStack.Navigator>
+        <TabStack.Navigator
+            screenOptions={({ route }) => ({
+                tabBarIcon: ({ focused, color, size }) => {
+                    let iconName;
+
+                    if (route.name === 'Home') {
+                        iconName = 'home'
+                    } else if (route.name === 'Search') {
+                        iconName = 'search';
+                    } else if (route.name === 'Notifications') {
+                        iconName = 'bell';
+                    } else if (route.name === 'Messages') {
+                        iconName = 'envelope-open';
+                    }
+
+
+                    // You can return any component that you like here!
+                    return <Icon name={iconName} type='FontAwesome' size={size} style={{ color: focused ? colors.main : color }} />;
+                },
+            })}
+            tabBarOptions={{
+                //activeTintColor: 'tomato',
+                inactiveTintColor: 'gray',
+                showLabel: false,
+            }}
+        >
             <TabStack.Screen name="Home" component={HomeStackScreen} />
             <TabStack.Screen name="Search" component={SearchStackScreen} />
             <TabStack.Screen name="Notifications" component={NotificationsStackScreen} />
@@ -98,6 +196,20 @@ const TabStackScreen = () => {
 };
 
 const DrawerStack = createDrawerNavigator();
+const DrawerStackScreen = () => {
+    return (
+        <DrawerStack.Navigator
+            drawerContent={Menu}
+            drawerType='back'
+            drawerStyle={{
+                //width: '85%'
+            }}>
+            <DrawerStack.Screen name="Drawer" component={TabStackScreen} />
+        </DrawerStack.Navigator>
+    )
+}
+
+const RootStack = createStackNavigator();
 
 function Router(props) {
     // const [isAuth, setAuth] = React.useState(false);
@@ -119,77 +231,28 @@ function Router(props) {
     return (
         //<AuthContext.Provider value={authContext}>
         <NavigationContainer ref={navigationRef}>
-            {!props.user ?
-                < AuthStack.Navigator initialRouteName='FirstScreen'>
-
-                    <AuthStack.Screen
-                        name="FirstScreen"
-                        component={FirstScreen}
-                        options={({ navigation, route }) => ({
-                            title: 'Login',
-                            headerShown: false
-                        })}
-
-                    />
-
-                    <AuthStack.Screen
-                        name="Login"
-                        component={Login}
-                        options={({ navigation, route }) => ({
-                            title: 'Login',
-                            headerShown: false
-                        })}
-                    />
-
-
-                    <AuthStack.Screen
-                        name="Register"
-                        component={Register}
+            <RootStack.Navigator headerMode='none' mode='model'>
+                {props.user ?
+                    (<>
+                        <RootStack.Screen
+                            name='Main'
+                            component={DrawerStackScreen}
+                            options={{
+                                animationEnabled: false
+                            }}
+                        />
+                        <RootStack.Screen name='AddTweet' component={AddTweet} />
+                    </>)
+                    :
+                    (<RootStack.Screen
+                        name='Main'
+                        component={AuthStackScreen}
                         options={{
-                            title: 'Register',
-                            headerShown: false
+                            animationEnabled: false
                         }}
-                    />
-                    <AuthStack.Screen
-                        name="Home"
-                        component={Home}
-                        options={({ navigation }) => ({
-                            title: 'Home',
-                            headerLeft: () => (
-                                <TouchableOpacity
-                                    onPress={() => {
-                                        AsyncStorage.removeItem(LOCAL_AUTH_ID);
-                                        USER.token = null;
-                                        navigation.replace('Login');
-                                    }}
-                                    style={{ marginLeft: 10 }}>
-                                    <Image style={{ height: 20, width: 20 }} source={require('./Image/logout.png')} />
-                                </TouchableOpacity>
-                            ),
-                            headerRight: () => (
-                                <TouchableOpacity
-                                    onPress={() => {
-                                        navigation.navigate('AddItem');
-                                    }}
-                                    style={{ marginRight: 10 }}>
-                                    <Text style={{ fontSize: 30 }}>+</Text>
-                                </TouchableOpacity>
-                            ),
-                        })}
-                    />
-                    <AuthStack.Screen
-                        name="AddItem"
-                        component={AddItem}
-                        options={{ title: 'Add New Character' }}
-                    />
-
-
-                </AuthStack.Navigator>
-                :
-                <DrawerStack.Navigator>
-                    <DrawerStack.Screen name="Drawer" component={TabStackScreen} />
-                </DrawerStack.Navigator>
-            }
+                    />)
+                }
+            </RootStack.Navigator>
 
         </NavigationContainer >
 

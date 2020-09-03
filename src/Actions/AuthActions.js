@@ -13,7 +13,7 @@ export const login = (params) => {
         auth()
             .signInWithEmailAndPassword(params.email, params.password)
             .then((data) => {
-                console.log('User signed in!', data.user);
+                //console.log('User signed in!', data.user);
                 const uid = data.user._user.uid;
 
                 //read user from the database
@@ -64,21 +64,21 @@ export const register = (params) => {
                     .doc(uid)
                     .set(setData)
                     .then(() => {
-                        console.log('User added!');
+                        //console.log('User added!');
                         RootNavigation.pop();
                     }).catch(() => { });
 
             })
             .catch(error => {
                 if (error.code === 'auth/email-already-in-use') {
-                    console.log('That email address is already in use!');
+                    //console.log('That email address is already in use!');
                 }
 
                 if (error.code === 'auth/invalid-email') {
-                    console.log('That email address is invalid!');
+                    //console.log('That email address is invalid!');
                 }
 
-                console.error(error);
+                //console.error(error);
             });
         //post(BASE_URL + '/register', params, dispatch, REGISTER_START, REGISTER_SUCCESS, REGISTER_FAILED);
     }
