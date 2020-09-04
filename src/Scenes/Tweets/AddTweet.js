@@ -59,7 +59,7 @@ const AddTweet = (props) => {
         };
 
         ImagePicker.showImagePicker(options, async (response) => {
-            console.log('Response = ', response);
+            //console.log('Response = ', response);
 
             if (response.didCancel) {
                 console.log('User cancelled image picker');

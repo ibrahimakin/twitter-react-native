@@ -114,7 +114,11 @@ const getUser = (uid, dispatch) => {
         .collection('Users')
         .doc(uid)
         .get().then((user) => {
-            dispatch({ type: LOGIN_SUCCESS, payload: user._data });
+            const userParams = {
+                ...user._data,
+                uid
+            }
+            dispatch({ type: LOGIN_SUCCESS, payload: userParams });
         }).catch((err) => {
             dispatch({ type: LOGIN_FAILED });
         });
