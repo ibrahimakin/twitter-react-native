@@ -62,14 +62,15 @@ const AddTweet = (props) => {
             //console.log('Response = ', response);
 
             if (response.didCancel) {
-                console.log('User cancelled image picker');
+                //console.log('User cancelled image picker');
             } else if (response.error) {
-                console.log('ImagePicker Error: ', response.error);
+                //console.log('ImagePicker Error: ', response.error);
             } else if (response.customButton) {
-                console.log('User tapped custom button: ', response.customButton);
+                //console.log('User tapped custom button: ', response.customButton);
             } else {
                 const uri = response.uri;
-                setImage(uri)
+                //console.log(uri);
+                setImage(uri);
             }
         });
 

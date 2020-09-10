@@ -57,9 +57,9 @@ export const addTweet = (params) => {
                     const reference = storage().ref(`/tweets/${tweetId}`);
 
                     reference.putFile(params.tweet.image).then(() => {
-
+                        //console.log(params.tweet.image);
                         reference.getDownloadURL().then((imageURL) => {
-                            console.log('asdurllll', imageURL);
+                            //console.log('asdurllll', imageURL);
 
                             firestore().collection('Tweets').doc(tweetId).update({ tweet: { image: imageURL, text: params.tweet.text } }).then(() => {
                                 dispatch({ type: ADD_TWEET_SUCCESS, payload: params })
@@ -67,7 +67,7 @@ export const addTweet = (params) => {
                             })
                         })
                     }).catch(error => {
-                        console.log('Hata Resim Yükleme: ', error);
+                        //console.log('Hata Resim Yükleme: ', error);
                     })
                 } else {
                     dispatch({ type: ADD_TWEET_SUCCESS, payload: params })
