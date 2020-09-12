@@ -8,8 +8,8 @@ import * as RootNavigation from '../RootNavigation.js';
 export const getTweets = (params) => {
     return (dispatch) => {
 
-        /*dispatch({ type: GET_TWEET_START })
-        firestore()
+        dispatch({ type: GET_TWEET_START });
+        /*firestore()
             .collection('Tweets')
             .get()
             .then((tweets) => {

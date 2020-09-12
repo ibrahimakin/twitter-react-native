@@ -15,6 +15,7 @@ import HomeDetail from './Scenes/Home/HomeDetail'
 import AddItem from './Scenes/Home/AddItem';
 import Messages from './Scenes/Messages/Messages';
 import MessageDetail from './Scenes/Messages/MessageDetail';
+import GetUsers from './Scenes/Messages/GetUsers';
 import Notifications from './Scenes/Notifications/Notifications';
 import NotificationDetail from './Scenes/Notifications/NotificationDetail';
 import Search from './Scenes/Search/Search';
@@ -134,7 +135,7 @@ const MessagesStackScreen = () => {
         <MessagesStack.Navigator>
             <MessagesStack.Screen name="Messages" component={Messages} options={({ navigation, route }) => ({ headerLeft: () => menu(navigation), })} />
             <MessagesStack.Screen name="MessageDetail" component={MessageDetail} />
-
+            <MessagesStack.Screen name="GetUsers" component={GetUsers} />
         </MessagesStack.Navigator>
     );
 };

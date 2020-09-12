@@ -48,6 +48,7 @@ export const login = (params) => {
 
 export const register = (params) => {
     return (dispatch) => {
+        dispatch({ type: REGISTER_START });
         auth()
             .createUserWithEmailAndPassword(params.email, params.password)
             .then((data) => {
@@ -65,7 +66,8 @@ export const register = (params) => {
                     .set(setData)
                     .then(() => {
                         //console.log('User added!');
-                        RootNavigation.pop();
+                        //RootNavigation.pop();
+                        dispatch({ type: REGISTER_SUCCESS, payload: userParams });
                     }).catch(() => { });
 
             })
@@ -77,7 +79,7 @@ export const register = (params) => {
                 if (error.code === 'auth/invalid-email') {
                     //console.log('That email address is invalid!');
                 }
-
+                dispatch({ type: REGISTER_FAILED });
                 //console.error(error);
             });
         //post(BASE_URL + '/register', params, dispatch, REGISTER_START, REGISTER_SUCCESS, REGISTER_FAILED);

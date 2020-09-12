@@ -15,9 +15,9 @@ const MessageDetail = ({ params, }) => {
     );
 }
 
-const mapStateToProps = ({ charactersResponse }) => {
-    const { loadingCharacter, characters } = charactersResponse;
-    return { loadingCharacter, characters };
+const mapStateToProps = ({ authResponse }) => {
+    const { user } = authResponse;
+    return { user };
 }
 
 export default connect(mapStateToProps, {})(MessageDetail);

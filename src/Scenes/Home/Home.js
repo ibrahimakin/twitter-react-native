@@ -4,7 +4,8 @@ import { getList, removeData } from "../../Actions"
 import { connect } from 'react-redux';
 import { Container, Header, Button, Icon, Fab } from 'native-base';
 import { colors } from '../../style';
-import { getTweets } from '../../Actions'
+import { getTweets } from '../../Actions';
+import SplashScreen from 'react-native-splash-screen';
 import TweetItems from '../Tweets/TweetItems';
 const { width, height } = Dimensions.get('window')
 
@@ -14,6 +15,7 @@ const Home = (props) => {
 
     useEffect(() => {
         props.getTweets();
+        SplashScreen.hide();
     }, []);
 
 

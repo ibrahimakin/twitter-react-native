@@ -60,7 +60,7 @@ const Register = (props) => {
                 <TouchableOpacity onPress={() => props.navigation.navigate('Login')}>
                     <Text style={styles.blueText}>  Forgot Password?</Text>
                 </TouchableOpacity>
-                <Button text='Sign Up' style={{ padding: 10 }} onPress={RegisterClick} loading={props.loading} />
+                <Button text='Sign Up' style={{ padding: 10, minWidth: 35, }} onPress={RegisterClick} loading={props.loading} />
             </View>
         </SafeAreaView>
     );

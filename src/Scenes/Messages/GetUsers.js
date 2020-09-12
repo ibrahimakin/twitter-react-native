@@ -4,16 +4,14 @@ import { getList, removeData } from "../../Actions"
 import { connect } from 'react-redux';
 import { Container, Header, Button, Icon, Fab } from 'native-base';
 import { colors } from '../../style';
-import { getRooms } from '../../Actions';
-import MessageItems from './MessageItems';
-const { width, height } = Dimensions.get('window')
+import { getAllUsers } from '../../Actions';
 
 
-const Messages = (props) => {
+const GetUsers = (props) => {
 
 
     useEffect(() => {
-        props.getRooms();
+        props.getAllUsers();
     }, []);
 
 
@@ -22,13 +20,23 @@ const Messages = (props) => {
             {props.loading ? <ActivityIndicator color='black' size='large' /> :
                 <FlatList
                     style={{ flex: 1, backgroundColor: 'white' }}
-                    data={props.rooms}
-                    renderItem={({ item, index }) =>
-                        <MessageItems
-                            data={item}
-                            index={index}
-                            profile_url={null}
-                        />
+                    data={props.allUsers}
+                    renderItem={({ item, index }) => {
+                        return (
+                            <TouchableOpacity
+                                onPress={() => {
+                                    props.navigation.navigate('MessageDetail', { receiver: item });
+                                }}
+                                style={{ flexDirection: 'row', margin: 10, borderBottomWidth: 0.5 }}>
+                                <Image source={{ uri: item.profile_image }} style={{ width: 50, height: 50, borderRadius: 25 }} />
+                                <View style={{ padding: 10 }} >
+                                    <Text style={{ fontFamily: 'bold', fontSize: 16 }}>{item.name}</Text>
+                                    <Text style={{ fontSize: 12 }}>@{item.username}</Text>
+                                </View>
+                            </TouchableOpacity>
+                        )
+                    }
+
                     }
                     keyExtractor={(item, index) => index.toString()}
                     ListEmptyComponent={() => {
@@ -45,19 +53,12 @@ const Messages = (props) => {
                     }}
                 />
             }
-            <Fab
-                containerStyle={{}}
-                style={{ backgroundColor: colors.main }}
-                position="bottomRight"
-                onPress={() => { props.navigation.navigate('GetUsers') }}>
-                <Icon name="plus" type='FontAwesome' />
-            </Fab>
         </View>
     );
 }
 
 const mapStateToProps = ({ messageResponse }) => {
-    const { loadingGetRoom, rooms } = messageResponse;
-    return { loadingGetRoom, rooms };
+    const { loadingUsers, allUsers } = messageResponse;
+    return { loadingUsers, allUsers };
 }
-export default connect(mapStateToProps, { getRooms })(Messages);
+export default connect(mapStateToProps, { getAllUsers })(GetUsers);

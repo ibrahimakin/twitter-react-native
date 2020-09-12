@@ -30,6 +30,26 @@ export const GET_TWEET_START = 'get_tweet_start';
 export const GET_TWEET_SUCCESS = 'get_tweet_success';
 export const GET_TWEET_FAILD = 'get_tweet_faild';
 
+export const ADD_MESSAGE_START = 'add_message_start';
+export const ADD_MESSAGE_SUCCESS = 'add_message_success';
+export const ADD_MESSAGE_FAILED = 'add_message_failed';
+
+export const GET_MESSAGE_START = 'get_message_start';
+export const GET_MESSAGE_SUCCESS = 'get_message_success';
+export const GET_MESSAGE_FAILED = 'get_message_failed';
+
+export const GET_ROOM_START = 'get_room_start';
+export const GET_ROOM_SUCCESS = 'get_room_success';
+export const GET_ROOM_FAILED = 'get_room_failed';
+
+export const ADD_ROOM_START = 'add_room_start';
+export const ADD_ROOM_SUCCESS = 'add_room_success';
+export const ADD_ROOM_FAILED = 'add_room_failed';
+
+export const GET_ALLUSERS_START = 'get_allusers_start';
+export const GET_ALLUSERS_SUCCESS = 'get_allusers_success';
+export const GET_ALLUSERS_FAILED = 'get_allusers_failed';
+
 export const GET_USER_TWEET_START = 'get_user_tweet_start';
 export const GET_USER_TWEET_SUCCESS = 'get_user_tweet_success';
 export const GET_USER_TWEET_FAILD = 'get_user_tweet_faild';
