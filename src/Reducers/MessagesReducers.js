@@ -11,7 +11,10 @@ const INITIAL_STATE = {
     rooms: [],
 
     loadingUsers: false,
-    allUsers: []
+    allUsers: [],
+
+    loadingMessages: false,
+    messages: []
 };
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
@@ -40,6 +43,19 @@ export default (state = INITIAL_STATE, action) => {
         case GET_ALLUSERS_FAILED:
             return {
                 ...state, loadingUsers: false
+            };
+
+        case GET_MESSAGE_START:
+            return {
+                ...state, loadingMessages: true
+            };
+        case GET_MESSAGE_SUCCESS:
+            return {
+                ...state, loadingMessages: false, messages: action.payload
+            };
+        case GET_MESSAGE_FAILED:
+            return {
+                ...state, loadingMessages: false
             };
         default:
             return state;

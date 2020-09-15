@@ -92,13 +92,16 @@ export const addMessage = (path, params) => {
     }
 }
 
-export const getAllUsers = () => {
+export const getAllUsers = (params) => {
+    //console.log(params); active user
     return (dispatch) => {
         dispatch({ type: GET_ALLUSERS_START })
         firestore().collection('Users').get().then((users) => {
             let data = [];
             users.forEach((doc) => {
-                data.push(doc.data())
+                if (doc.data().email != params.email) {
+                    data.push(doc.data());
+                }
             });
 
             dispatch({ type: GET_ALLUSERS_SUCCESS, payload: data });

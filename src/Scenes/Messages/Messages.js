@@ -27,7 +27,6 @@ const Messages = (props) => {
                         <MessageItems
                             data={item}
                             index={index}
-                            profile_url={null}
                         />
                     }
                     keyExtractor={(item, index) => index.toString()}

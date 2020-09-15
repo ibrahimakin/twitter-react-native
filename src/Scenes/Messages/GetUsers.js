@@ -4,14 +4,15 @@ import { getList, removeData } from "../../Actions"
 import { connect } from 'react-redux';
 import { Container, Header, Button, Icon, Fab } from 'native-base';
 import { colors } from '../../style';
-import { getAllUsers } from '../../Actions';
+import { getAllUsers, startRoom } from '../../Actions';
 
 
 const GetUsers = (props) => {
 
 
     useEffect(() => {
-        props.getAllUsers();
+        //console.log(props.user)
+        props.getAllUsers(props.user);
     }, []);
 
 
@@ -25,7 +26,18 @@ const GetUsers = (props) => {
                         return (
                             <TouchableOpacity
                                 onPress={() => {
-                                    props.navigation.navigate('MessageDetail', { receiver: item });
+
+                                    const second_user = item;
+                                    const path = props.user.username + '+' + second_user.username;
+
+                                    const params = {
+                                        createdDate: new Date(),
+                                        first_user: props.user,
+                                        second_user,
+                                        path
+                                    };
+                                    props.startRoom(path, params);
+                                    props.navigation.navigate('MessageDetail', { data: { path, second_user } });
                                 }}
                                 style={{ flexDirection: 'row', margin: 10, borderBottomWidth: 0.5 }}>
                                 <Image source={{ uri: item.profile_image }} style={{ width: 50, height: 50, borderRadius: 25 }} />
@@ -57,8 +69,9 @@ const GetUsers = (props) => {
     );
 }
 
-const mapStateToProps = ({ messageResponse }) => {
+const mapStateToProps = ({ messageResponse, authResponse }) => {
     const { loadingUsers, allUsers } = messageResponse;
-    return { loadingUsers, allUsers };
+    const { user } = authResponse;
+    return { loadingUsers, allUsers, user };
 }
-export default connect(mapStateToProps, { getAllUsers })(GetUsers);
+export default connect(mapStateToProps, { getAllUsers, startRoom })(GetUsers);

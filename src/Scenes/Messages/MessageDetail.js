@@ -1,23 +1,105 @@
-import React, { useEffect } from 'react';
-import { Text, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Dimensions, Text, View, FlatList, TouchableOpacity } from 'react-native';
+import { Button, Input } from '../../Components';
 import { connect } from 'react-redux';
+import { getMessages, addMessage } from '../../Actions';
+import { Icon } from 'native-base';
+const { width } = Dimensions.get('window');
 
-const MessageDetail = ({ params, }) => {
+const MessageDetail = (props) => {
 
+    const [message, setMessage] = useState('');
     useEffect(() => {
 
+        props.getMessages(props.route.params.data.path);
     }, []);
 
     return (
-        <View>
-            <Text>Message Detail Page</Text>
+        <View style={MessageStyle.container}>
+            <View style={MessageStyle.messageListContainer}>
+                <FlatList
+                    data={props.messages}
+                    keyExtractor={(item, index) => index.toString()}
+                    renderItem={({ item, index }) => {
+                        //console.log('Liste gelen: ', item);
+                        let isMe = props.user.username == item.sender_user.username
+
+                        const user_first_letter = !isMe ? item.sender_user.name.charAt(0) : ''
+
+
+                        return (
+                            <View style={[MessageStyle.messageItemContainer, { justifyContent: isMe ? 'flex-end' : 'flex-start' }]}>
+                                {isMe ?
+                                    null :
+                                    <View style={MessageStyle.profileCircle}>
+                                        <Text style={{ color: 'black' }}>{user_first_letter}</Text>
+                                    </View>
+                                }
+                                <View style={[{ backgroundColor: isMe ? '#1da1f2' : '#cc8931', width: item.text.length > 40 ? width - 100 : null }, MessageStyle.bubleStyle]}>
+                                    <Text style={{ color: 'white' }}>{item.text}</Text>
+                                </View>
+
+                            </View>
+                        )
+                    }}
+                    inverted
+                />
+            </View>
+
+            <View style={MessageStyle.inputContainerStyle}>
+                <Input
+                    placeholder='mesaj yaz...'
+                    style={{ flex: 1, height: 30, padding: 5, borderBottomWidth: 0 }}
+                    value={message}
+                    maxLength={100}
+                    onChangeText={(tweet) => setMessage(tweet)}
+                    multiline
+                />
+                <TouchableOpacity
+                    onPress={() => {
+                        const params = {
+                            text: message,
+                            createdDate: new Date(),
+                            receiver_user: props.route.params.data.second_user,
+                            sender_user: props.user
+                        }
+                        props.addMessage(props.route.params.data.path, params)
+                        setMessage('')
+
+                    }}
+                    style={{ marginBottom: 10 }}
+                >
+                    <Icon name='send' type='FontAwesome' />
+                </TouchableOpacity>
+            </View>
         </View>
     );
 }
 
-const mapStateToProps = ({ authResponse }) => {
-    const { user } = authResponse;
-    return { user };
+const MessageStyle = {
+    container: { flex: 1 },
+    inputContainerStyle: {
+        flex: 1,
+        borderTopWidth: 1,
+        borderTopColor: 'black',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: 10
+    },
+    messageListContainer: { flex: 15, backgroundColor: 'white' },
+    inputStyle: { width: width - 110, height: 50 },
+    sendButtonStyle: { width: width / 7, height: width / 7 },
+    messageItemContainer: { padding: 10, flexDirection: 'row' },
+    profileCircle: { height: 40, width: 40, borderRadius: 20, justifyContent: 'center', alignItems: 'center', borderWidth: 0.5, borderColor: 'black' },
+    bubleStyle: { marginLeft: 20, padding: 10, borderRadius: 10 }
 }
 
-export default connect(mapStateToProps, {})(MessageDetail);
+
+const mapStateToProps = ({ authResponse, messageResponse }) => {
+    const { user } = authResponse;
+    const { messages } = messageResponse;
+    return { user, messages };
+}
+
+export default connect(mapStateToProps, { getMessages, addMessage })(MessageDetail);
